@@ -45,6 +45,24 @@ app.delete('/usuarios/excluirUsuario/:id', (req, res) => {
 
 })
 
+//atualizar usuário
+
+/**
+ * localizar pelo ID do usuário e alterar o nome e/ou email
+ */
+app.put('/usuarios/atualizar', (req, res) => {
+    const id = parseInt(req.query.id);
+    const nome = req.query.nome;
+    const email = req.query.email;
+  
+    const itemIndex = usuarios.findIndex(item => item.id === id);
+    if (itemIndex !== -1) {
+      usuarios[itemIndex] = { id, nome, email };
+      res.status(200).send(usuarios[itemIndex]);
+    } else {
+      res.status(404).send({ message: 'Item não localizado' });
+    }
+  });
 
 app.listen(8080, () => {
     const data = new Date();
